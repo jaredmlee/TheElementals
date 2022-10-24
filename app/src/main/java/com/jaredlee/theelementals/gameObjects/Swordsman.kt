@@ -1,15 +1,16 @@
-package com.jaredlee.theelementals
+package com.jaredlee.theelementals.gameObjects
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import com.jaredlee.theelementals.GameObject
+import com.jaredlee.theelementals.Location
 
 class Swordsman(val game: GameObject) : GameObject() {
     override fun update(elapsedTime: Long) {
         val turn : String = game.state["turn"]
         val swordsmanHealth: Int  = game.state["swordsmanHealth"]
         val wallLocs: ArrayList<Location> = game.state["wallLocs"]
-        val cellSize: Int  = game.state["cellSize"]
         if (swordsmanHealth < 1){
             state["alive"] = false;
         }
@@ -32,7 +33,8 @@ class Swordsman(val game: GameObject) : GameObject() {
                 state["coords"] = Location(currX - 1f, currY)
             if (random == 1) {
                 if (currY<12){
-                state["coords"] = Location(currX, currY + 1f)}
+                state["coords"] = Location(currX, currY + 1f)
+                }
                 else
                 state["coords"] = Location(currX,currY-1f)
             }
@@ -102,7 +104,10 @@ class Swordsman(val game: GameObject) : GameObject() {
             canvas.drawRect(27f,5f,37f,15f,paint)
             canvas.drawRect(23f,15f,34f,25f,paint)
             canvas.drawRect(23f,25f,27f,27f,paint)
-            paint.color = Color.rgb(136,8,8)
+            if (state["elite"])
+                paint.color = Color.BLACK
+            else
+                paint.color = Color.rgb(136,8,8)
             canvas.drawRect(24f,7f,73f,12f,paint)//cap
             canvas.drawRect(27f,2f,69f,12f,paint)
             paint.color = Color.BLACK
@@ -137,14 +142,35 @@ class Swordsman(val game: GameObject) : GameObject() {
         canvas.drawRect(47f,51f,60f,56f,paint)
         paint.color = Color.LTGRAY
         canvas.drawRect(50f,2f,57f,51f,paint)//sword
-
-        if (swordsmanHealth==2) {
+        if (state["elite"]){
             paint.color = Color.GREEN
-            canvas.drawRect(20f, -10f, 80f, 0f, paint)
+            if (swordsmanHealth==5) {
+                canvas.drawRect(20f, -10f, 80f, 0f, paint)
+            }
+            else if (swordsmanHealth==4) {
+                canvas.drawRect(20f, -10f, 70f, 0f, paint)
+            }
+            else if (swordsmanHealth==3) {
+                paint.color = Color.YELLOW
+                canvas.drawRect(20f, -10f, 60f, 0f, paint)
+            }
+            else if (swordsmanHealth == 2){
+                paint.color = Color.YELLOW
+                canvas.drawRect(20f, -10f, 50f, 0f, paint)
+            }
+            else if (swordsmanHealth==1){
+                paint.color = Color.RED
+                canvas.drawRect(20f, -10f, 40f, 0f, paint)
+            }
         }
-        else if (swordsmanHealth == 1){
-            paint.color = Color.RED
-            canvas.drawRect(20f, -10f, 40f, 0f, paint)
+        else {
+            if (swordsmanHealth == 2) {
+                paint.color = Color.GREEN
+                canvas.drawRect(20f, -10f, 80f, 0f, paint)
+            } else if (swordsmanHealth == 1) {
+                paint.color = Color.RED
+                canvas.drawRect(20f, -10f, 40f, 0f, paint)
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ package com.jaredlee.theelementals
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import com.jaredlee.theelementals.levels.*
 import kotlin.collections.ArrayList
 
 class TheElementals( val width: Float, val height: Float) : GameObject() {
@@ -10,6 +11,8 @@ class TheElementals( val width: Float, val height: Float) : GameObject() {
     private val numRows: Int = (height - 50).toInt() / cellSize;
     private val level1: Level1;
     private val level2: Level2;
+    private val level3: Level3;
+    private val level4: Level4;
     private val level5: Level5;
     private val storeScreen: StoreScreen
 
@@ -30,6 +33,8 @@ class TheElementals( val width: Float, val height: Float) : GameObject() {
         val emptyArray : ArrayList<Location> = ArrayList()
         state["wallLocs"] = emptyArray
         level2 = Level2(this)
+        level3 = Level3(this)
+        level4 = Level4(this)
         level5 = Level5(this)
         storeScreen = StoreScreen(this)
         level1 = Level1(this) // level one has to be the last to initialize so the init values are
@@ -42,6 +47,12 @@ class TheElementals( val width: Float, val height: Float) : GameObject() {
             }
         else if (level == 2){
             level2.doFrame(deltaTime)
+        }
+        else if (level == 3){
+            level3.doFrame(deltaTime)
+        }
+        else if (level == 4){
+            level4.doFrame(deltaTime)
         }
         else if(level == 5){
             level5.doFrame(deltaTime)
@@ -57,6 +68,12 @@ class TheElementals( val width: Float, val height: Float) : GameObject() {
         }
         else if (level == 2){
             level2.renderLevel2(canvas,paint)
+        }
+        else if (level == 3){
+            level3.renderLevel2(canvas,paint)
+        }
+        else if (level == 4){
+            level4.renderLevel2(canvas,paint)
         }
         else if(level == 5){
             level5.renderLevel5(canvas,paint)

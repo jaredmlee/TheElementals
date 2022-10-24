@@ -1,8 +1,10 @@
-package com.jaredlee.theelementals
+package com.jaredlee.theelementals.gameObjects
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import com.jaredlee.theelementals.GameObject
+import com.jaredlee.theelementals.Location
 
 class Door(val game: GameObject) : GameObject() {
     override fun render(canvas: Canvas, paint: Paint) {

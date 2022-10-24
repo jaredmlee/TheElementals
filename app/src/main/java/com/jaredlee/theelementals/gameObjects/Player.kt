@@ -1,8 +1,11 @@
-package com.jaredlee.theelementals
+package com.jaredlee.theelementals.gameObjects
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import com.jaredlee.theelementals.GameObject
+import com.jaredlee.theelementals.Location
+import com.jaredlee.theelementals.ResetStates
 
 class Player(val game: GameObject) : GameObject() {
     override fun update(elapsedTime: Long) {

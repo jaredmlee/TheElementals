@@ -1,40 +1,39 @@
-package com.jaredlee.theelementals
+package com.jaredlee.theelementals.levels
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import kotlin.collections.ArrayList
+import com.jaredlee.theelementals.GameObject
+import com.jaredlee.theelementals.Location
+import com.jaredlee.theelementals.Render
+import com.jaredlee.theelementals.gameObjects.*
 
-class Level2(private val game: GameObject): GameObject() {
+class Level3 (private val game: GameObject): GameObject(){
+    //TODO add a chest thingy on the inside of the L shape. It'd be cool to have hidden chests
+    //everywhere that have items, coins, etc.
     private var numCols = 7
-    private var cellSize = 102
     private var numRows = 13
     var player : GameObject
     var swordsman : GameObject
     var door: GameObject
     var door2: GameObject
     var coins: GameObject
-    var lockedDoor: GameObject
     private var floorTiles: ArrayList<CastleFloor> = ArrayList()
     private var wallLocs: ArrayList<Location> = ArrayList()
     private var walls: ArrayList<Wall> = ArrayList()
     init{
-        val gameState = State()
-        gameState["cellsize"] = cellSize
         player = Player(game)
-        player.state["coords"] = Location(1f,2f)
+        player.state["coords"] = Location(6f,11f)
         player.state["alive"] = true
         swordsman = Swordsman(game)
         swordsman.state["alive"] = true
         swordsman.state["coords"] = Location(0f,11f)
+        swordsman.state["elite"] = false
         door = Door(game);
-        door.state["coords"] = Location(0f,2f)
+        door.state["coords"] = Location(6f,12f)
         door2 = Door(game)
-        door2.state["coords"] = Location(6f,0f)
-        player.state["doorLevel"] = 1
-        player.state["doorLevel2"] = 3
-        lockedDoor = LockedDoor(game)
-        lockedDoor.state["coords"] = Location(6f,10f)
-        player.state["lockedDoorLevel"] = 5
+        door2.state["coords"] = Location(0f,6f)
+        player.state["doorLevel"] = 2
+        player.state["doorLevel2"] = 4
         coins = Coins(game)
         for (i in 0 until numRows) {
             for (j in 0 until numCols) {
@@ -43,36 +42,22 @@ class Level2(private val game: GameObject): GameObject() {
                 floorTiles.add(floor)
             }
         }
-        for (i in 0 until 3){
+        for (i in 0 until 5){
             val wall = Wall(game)
-            wall.state["coords"] = Location(i+0f,9f)
+            wall.state["coords"] = Location(i+2f,9f)
             wallLocs.add(wall.state["coords"])
             walls.add(wall)
         }
-        for (i in 0 until 3){
+        for (i in 0 until 6){
             val wall = Wall(game)
-            wall.state["coords"] = Location(i+4f,9f)
+            wall.state["coords"] = Location(2f,i+3f)
             wallLocs.add(wall.state["coords"])
             walls.add(wall)
         }
-        for (i in 0 until 7){
-            val wall = Wall(game)
-            wall.state["coords"] = Location(2f,i+0f)
-            wallLocs.add(wall.state["coords"])
-            walls.add(wall)
-        }
-        for (i in 0 until 7){
-            val wall = Wall(game)
-            wall.state["coords"] = Location(3f,i+0f)
-            wallLocs.add(wall.state["coords"])
-            walls.add(wall)
-        }
-        for (i in 0 until 7){
-            val wall = Wall(game)
-            wall.state["coords"] = Location(4f,i+0f)
-            wallLocs.add(wall.state["coords"])
-            walls.add(wall)
-        }
+        val wall = Wall(game)
+        wall.state["coords"] = Location(2f,0f)
+        wallLocs.add(wall.state["coords"])
+        walls.add(wall)
         game.state["wallLocs"] = wallLocs
     }
     fun resetGameStates(){
@@ -80,9 +65,11 @@ class Level2(private val game: GameObject): GameObject() {
         swordsman.state["coords"] = Location(0f,11f)
         game.state["swordsmanHealth"]  = 2
         swordsman.state["alive"] = true
-        game.state["doorPos"] = Location(0f,2f)
-        game.state["doorPos2"] = Location(6f,0f)
-        game.state["LockedDoorPos"] = Location(6f,10f)
+        game.state["doorPos"] = Location(6f,12f)
+        game.state["doorPos2"] = Location(0f,6f)
+        //set lockedDoor to something ludicrous, would be nice to figure out a way to not have a locked door
+        //on every level
+        game.state["LockedDoorPos"] = Location(100f,100f)
         game.state["swordsmanPos"] = Location(0f,11f)
     }
     fun doFrame(deltaTime: Long){
@@ -97,7 +84,6 @@ class Level2(private val game: GameObject): GameObject() {
         render.renderSwordsman(canvas,paint,swordsman)
         render.renderDoor(canvas,paint,door)
         render.renderKey(canvas,paint,door2)
-        render.renderLockedDoor(canvas,paint,lockedDoor)
         render.renderCoins(canvas,paint,coins)
     }
 }

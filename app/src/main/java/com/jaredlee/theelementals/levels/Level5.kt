@@ -1,7 +1,9 @@
-package com.jaredlee.theelementals
+package com.jaredlee.theelementals.levels
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import com.jaredlee.theelementals.*
+import com.jaredlee.theelementals.gameObjects.*
 
 class Level5(private val game: GameObject): GameObject() {
     private var numCols = 7
@@ -18,6 +20,7 @@ class Level5(private val game: GameObject): GameObject() {
         swordsman  = Swordsman(game)
         swordsman.state["coords"] = Location(4f,10f)
         swordsman.state["alive"] = true
+        swordsman.state["elite"] = false
         coins = Coins(game)
         store = Store(game)
         store.state["coords"] = Location(2f,8f)
@@ -39,6 +42,9 @@ class Level5(private val game: GameObject): GameObject() {
         swordsman.state["alive"] = true
         game.state["swordsmanPos"] = Location(4f,10f)
         game.state["storePos"] = Location(2f,8f)
+        //set lockedDoor to something ludicrous, would be nice to figure out a way to not have a locked door
+        //on every level
+        game.state["LockedDoorPos"] = Location(100f,100f)
     }
     fun doFrame(deltaTime: Long){
         player.update(deltaTime)

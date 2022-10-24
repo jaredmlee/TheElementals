@@ -2,6 +2,9 @@ package com.jaredlee.theelementals
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import com.jaredlee.theelementals.gameObjects.CastleFloor
+import com.jaredlee.theelementals.gameObjects.Grass
+import com.jaredlee.theelementals.gameObjects.Wall
 import java.util.ArrayList
 
 class Render{

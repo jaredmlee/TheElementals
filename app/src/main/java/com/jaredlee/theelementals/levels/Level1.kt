@@ -1,7 +1,9 @@
-package com.jaredlee.theelementals
+package com.jaredlee.theelementals.levels
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import com.jaredlee.theelementals.*
+import com.jaredlee.theelementals.gameObjects.*
 import kotlin.collections.ArrayList
 
 class Level1(val game: GameObject): GameObject() {
@@ -23,6 +25,7 @@ class Level1(val game: GameObject): GameObject() {
         swordsman = Swordsman(game)
         swordsman.state["alive"] = true
         swordsman.state["coords"] = Location(0f,5f)
+        swordsman.state["elite"] = false
         door = Door(game)
         door.state["coords"] = Location(6f,2f)
         door2 = Door(game)
@@ -67,6 +70,9 @@ class Level1(val game: GameObject): GameObject() {
         swordsman.state["alive"] = true                  //the swordsmans states here, figure out way to fix
         game.state["doorPos"] = Location(6f,2f)
         game.state["doorPos2"] = Location(1f,0f)
+        //set lockedDoor to something ludicrous, would be nice to figure out a way to not have a locked door
+        //on every level
+        game.state["LockedDoorPos"] = Location(100f,100f)
         game.state["swordsmanPos"] = Location(0f,5f)
     }
     fun doFrame(deltaTime: Long){
